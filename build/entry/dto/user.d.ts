@@ -5,3 +5,4 @@ export interface User {
     status?: "Happy" | "Sad";
     phoneNumbers: string[];
 }
+//# sourceMappingURL=user.d.ts.map

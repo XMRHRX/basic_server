@@ -4,3 +4,4 @@ export declare class UsersService {
     get(id: number, name?: string): User;
     create(userCreationParams: UserCreationParams): User;
 }
+//# sourceMappingURL=usersServices.d.ts.map

@@ -15,9 +15,7 @@
       "@/*": ["*"]
     }
   },
-  "exclude": [
-    "build",
-    "script",
-    "node_modules"
+  "include": [
+	  "src"
   ]
 }

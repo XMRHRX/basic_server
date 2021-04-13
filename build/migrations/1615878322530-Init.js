@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Init1615878322530 = void 0;
 const typeorm_1 = require("typeorm");
 class Init1615878322530 {
     async createTable(queryRunner) {
@@ -31,5 +30,5 @@ class Init1615878322530 {
         await queryRunner.query("ALTER TABLE `page` DROP COLUMN `city`");
     }
 }
-exports.Init1615878322530 = Init1615878322530;
+exports.default = Init1615878322530;
 //# sourceMappingURL=1615878322530-Init.js.map

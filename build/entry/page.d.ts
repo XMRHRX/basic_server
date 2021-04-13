@@ -6,3 +6,4 @@ export declare class page {
     constructor(param?: page);
     getContent(): string;
 }
+//# sourceMappingURL=page.d.ts.map

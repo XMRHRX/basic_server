@@ -5,3 +5,4 @@ export declare class Page {
     DOM: string;
     constructor(param?: Page);
 }
+//# sourceMappingURL=page.d.ts.map

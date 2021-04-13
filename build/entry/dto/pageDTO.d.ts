@@ -3,3 +3,4 @@ export interface PageDTO {
     URL: string;
     DOM?: string;
 }
+//# sourceMappingURL=pageDTO.d.ts.map

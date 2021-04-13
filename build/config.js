@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { page } from './entry/page';
 const page_1 = require("@/entry/page");
+// for running migration
+// import { page } from '../src/entry/page';
 exports.default = {
     type: 'mysql',
     host: 'localhost',

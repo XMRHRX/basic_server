@@ -1,6 +1,7 @@
-import AppInit from "@/app";
+import 'module-alias/register';
 import { Express } from 'express';
 import * as config from '@/config';
+import AppInit from "@/app";
 
 const port = process.env.PORT || 3000;
 const typeormConfig = config;

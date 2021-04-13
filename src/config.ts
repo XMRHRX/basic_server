@@ -1,8 +1,10 @@
 import { ConnectionOptions } from 'typeorm';
-import { Init1615878322530 } from '@/migrations/1615878322530-Init';
+import Init1615878322530 from '@/migrations/1615878322530-Init';
 
-// import { page } from './entry/page';
 import { page } from '@/entry/page';
+
+// for running migration
+// import { page } from '../src/entry/page';
 
 export default {
   type: 'mysql',

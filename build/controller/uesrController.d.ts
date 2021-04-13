@@ -5,3 +5,4 @@ export declare class UserController extends Controller {
     getUser(userID: number, name?: string): Promise<User>;
     createUser(reqBody: UserCreationParams): Promise<void>;
 }
+//# sourceMappingURL=uesrController.d.ts.map
