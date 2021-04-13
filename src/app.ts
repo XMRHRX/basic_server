@@ -22,7 +22,7 @@ export default function AppInit(typeormConfig: ConnectionOptions): Promise<Expre
     );
     app.use(bodyParser.json());
 
-    console.log(typeormConfig);
+    //console.log(typeormConfig);
     await createConnection(typeormConfig);
     CrawlerService.init();
 

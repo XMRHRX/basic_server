@@ -2,9 +2,6 @@ import { ConnectionOptions } from 'typeorm';
 import { Init1615878322530 } from '@/migrations';
 import { page } from '@/entry/page';
 
-// for running migration
-// import { page } from '../src/entry/page';
-
 export default {
   type: 'mysql',
   host: 'localhost',
@@ -12,11 +9,15 @@ export default {
   username: 'user',
   password: 'ThinkPad',
   database: 'webpages',
+  dropSchema: false,
   entities: [
     page,
   ],
   migrations: [Init1615878322530],
-  migrationsRun: true,
+  migrationsRun: false,
   synchronize:  false,
+  extra: {
+	  charset: 'utf8_unicode_ci',
+  },
   logging: 'all'
 } as ConnectionOptions;

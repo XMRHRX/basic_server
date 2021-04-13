@@ -1,10 +1,13 @@
 import 'module-alias/register';
 import { Express } from 'express';
-import * as config from '@/config';
+import * as devConf from '@/config/dev';
+import * as proConf from '@/config/production';
 import AppInit from "@/app";
 
+const mode = process.env.mode;
 const port = process.env.PORT || 3000;
-const typeormConfig = config;
+const typeormConfig = proConf;
+	//( mode == 'dev' ? devConf : proConf);
 
 AppInit(typeormConfig.default)
 .then((app: Express)=>{
