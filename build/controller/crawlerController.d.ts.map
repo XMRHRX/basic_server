@@ -1,1 +1,0 @@
-{"version":3,"file":"crawlerController.d.ts","sourceRoot":"","sources":["../../src/controller/crawlerController.ts"],"names":[],"mappings":"AAAA,OAAO,EAEL,UAAU,EAOX,MAAM,MAAM,CAAC;AAUd,qBACa,gBAAiB,SAAQ,UAAU;IAEjC,MAAM,CACT,GAAG,EAAE,MAAM,GAClB,OAAO,CAAC,MAAM,CAAC;IASL,SAAS,CACZ,GAAG,EAAE,MAAM,GAClB,OAAO,CAAC,IAAI,CAAC;CA2BjB"}

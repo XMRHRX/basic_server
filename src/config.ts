@@ -1,6 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
-import Init1615878322530 from '@/migrations/1615878322530-Init';
-
+import { Init1615878322530 } from '@/migrations';
 import { page } from '@/entry/page';
 
 // for running migration
@@ -16,7 +15,7 @@ export default {
   entities: [
     page,
   ],
-  migrations: ['src/migrations/*.ts'],
+  migrations: [Init1615878322530],
   migrationsRun: true,
   synchronize:  false,
   logging: 'all'

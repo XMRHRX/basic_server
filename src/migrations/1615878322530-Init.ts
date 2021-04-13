@@ -1,8 +1,5 @@
-import {
-	MigrationInterface, QueryRunner, Table
-} from "typeorm";
-
-class Init1615878322530 implements MigrationInterface {
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
+export class Init1615878322530 implements MigrationInterface {
     public async createTable(queryRunner: QueryRunner): Promise<void>{
       await queryRunner.createTable(new Table({
         name: 'page',
@@ -34,4 +31,3 @@ class Init1615878322530 implements MigrationInterface {
     }
 
 }
-export default Init1615878322530;
