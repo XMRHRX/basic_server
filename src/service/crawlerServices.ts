@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import { page } from '../entry/page';
-import { NoSuchPageError } from '../error/page';
+import { page } from '@/entry';
+import { NoSuchPageError } from '@/error';
 
 export class CrawlerService {
   private static INSTANCE: CrawlerService;
@@ -18,6 +18,7 @@ export class CrawlerService {
 
   public async getByURL(url: string, GET_param?: string): Promise<page> {
     const pageCli = getRepository(page);
+    console.log('here 1');
     const searchedPage: page | undefined = await pageCli.findOne({
       where: {
         url: url,

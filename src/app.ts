@@ -12,8 +12,8 @@ export default function AppInit(typeormConfig: ConnectionOptions): Promise<Expre
   return new Promise(async (resolve, reject)=>{
     app.use(cors({
       origin: '*',
-      methods: ['GET', 'POST'], 
-      allowedHeaders: ['Content-Type',  'Authorization'],
+      methods: ['GET', 'POST'],
+      //allowedHeaders: ['Content-Type',  'Authorization'],
     }));
     app.use(
       bodyParser.urlencoded({
