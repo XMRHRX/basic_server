@@ -26,8 +26,9 @@ export class UserController extends Controller {
   public async createUser(
     @Body() reqBody: UserCreationParams
   ): Promise<void> {
+    console.log("here");
     this.setStatus(201);
-    new UsersService().create(reqBody);
+    console.log(new UsersService().create(reqBody));
     return;
   }
 }

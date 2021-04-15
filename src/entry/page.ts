@@ -1,52 +1,48 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class page {
+export class Page {
+
   @PrimaryGeneratedColumn('increment', {
     type: 'int',
     unsigned: true, 
   })
   _id: number;
-
   @Column({
-    type: 'text',
+    type: 'varchar',
+    length: 256,
     collation: 'utf8_unicode_ci',
-    nullable: false,
+    nullable: false
   })
-  url: string;
-
+  URL: string
   @Column({
-    type: 'text',
-    collation: 'utf8_unicode_ci',
-    nullable: true,
-    default: null
+    type: 'varchar', 
+    length: 5000, 
+    collation: 'utf8_unicode_ci', 
+    nullable: true
   })
-  GET_param: Array<string> | null;
+  DOM: string
 
-  @Column({
-    type: 'text',
-    collation: 'utf8_unicode_ci',
-    nullable: true,
-    default: null
-  })
-  content: string;
-
-  constructor(param: page = {} as page) {
+  constructor(param: Page = {} as Page){
     const {
       _id,
-      url,
-      GET_param,
-      content
+      URL, //www.google.com/hi
+      DOM
+      //site, //www.google.com
+      //domain, //google.com
+      //uri,  //hi
     } = param;
 
     this._id = _id;
-    this.url = url;
-    this.GET_param = GET_param;
-    this.content = content;
+    this.URL = URL;
+    this.DOM = DOM;
+    //this.site = site;
+    //this.domain = domain;
+    //this.uri = uri;
   }
 
-  public getContent(): string {
-    return this.content;
+  public async getDOM(): Promise<string> {
+    return this.DOM;
   }
 
 }

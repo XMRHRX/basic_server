@@ -2,6 +2,7 @@ import express, { Express }from "express";
 import cors from 'cors';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import bodyParser from "body-parser";
+import swaggerUi from 'swagger-ui-express';
 import { RegisterRoutes } from "@/routes";
 
 import { CrawlerService } from '@/service/crawlerServices';
@@ -21,6 +22,17 @@ export default function AppInit(typeormConfig: ConnectionOptions): Promise<Expre
       })
     );
     app.use(bodyParser.json());
+    app.use(
+      "/docs",
+      swaggerUi.serve,
+      swaggerUi.setup(undefined, {
+        swaggerUrl: './swagger.json',
+        swaggerOptions: {
+          //url: 'swagger.json'
+          validatorUrl: null
+        }
+      })
+    );
 
     //console.log(typeormConfig);
     await createConnection(typeormConfig);

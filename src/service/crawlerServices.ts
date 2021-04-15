@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { page } from '@/entry';
+import { Page } from '@/entry';
 import { NoSuchPageError } from '@/error';
 
 export class CrawlerService {
@@ -16,25 +16,28 @@ export class CrawlerService {
     return this.INSTANCE;
   }
 
-  public async getByURL(url: string, GET_param?: string): Promise<page> {
-    const pageCli = getRepository(page);
-    console.log('here 1');
-    const searchedPage: page | undefined = await pageCli.findOne({
-      where: {
-        url: url,
-        GET_param: GET_param
-      },
-    });
-
-    if( searchedPage === undefined ) {
-      throw new NoSuchPageError(url);
+  public async getByURL(url: string, GET_param?: string): Promise<Page> {
+    try{
+      const pageCli = getRepository(Page);
+      const searchedPage: Page | undefined = await pageCli.findOne({
+        where: {
+          URL: url
+        },
+      });
+      if( searchedPage === undefined ) {
+        throw new NoSuchPageError(url);
+      }
+      console.log("In getByURL: ", searchedPage);
+      return searchedPage;
+    } catch(e) {
+        console.debug(e);
+        throw e;
     }
-    return searchedPage;
   }
 
-  public async store(url: string, content: string, GET_param: Array<string> | null): Promise<void> {
-    const pageCli = getRepository(page);
-    pageCli.insert({ url, GET_param, content });
+  public async store(URL: string, DOM: string): Promise<void> {
+    const pageCli = getRepository(Page);
+    pageCli.insert({URL, DOM});
     return;
   }
 

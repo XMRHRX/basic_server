@@ -1,8 +1,10 @@
+import 'module-alias/register';
 import { createConnection, Connection } from 'typeorm'
-import * as devConf from '@/config/dev';
-import * as proConf from '@/config/production';
+import * as devConf from '../src/config/dev';
+import * as proConf from '../src/config/production';
+import * as migratationConf from '../src/config/migration';
 
-const config = proConf;
+let config = migratationConf.default;
 console.log(config);
 
 async function runMigration(){

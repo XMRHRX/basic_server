@@ -1,6 +1,9 @@
 
-export interface PageDTO {
-  session?: string,
+export type PageDTO = {
   URL: string,
-  DOM?: string, 
+  DOM: string, 
+}
+
+export type RequestPageDTO = {
+  URL: string,
 }

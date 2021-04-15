@@ -9,7 +9,7 @@ import {
   SuccessResponse, 
 } from "tsoa";
 import { getRepository } from 'typeorm';
-import { Page } from "@/entry/dto/page";
+import { Page, PageDTO, RequestPageDTO } from "@/entry";
 import { CrawlerService } from "@/service";
 import { NoSuchPageError } from '@/error';
 const _Crawler = require('crawler');
@@ -30,53 +30,49 @@ export class CrawlerControler extends Controller {
   public async getWeb(
     @Path() url: string
   ): Promise<string> {
-  let page;
-  try{
-    page = await CrawlerService.getInstance().getByURL(url);
-  } catch( e ) {
-    console.log(e);
-    console.log(`Can not find page: ${url}`);
-  }
-  if( page ){
-    return page.getContent();
-  }
-  return "";
+    let page: Page | undefined;
+    try{
+      page = await CrawlerService.getInstance().getByURL(url);
+      return page.getDOM();
+    } catch( e ) {
+      console.log(e);
+      console.log(`Can not find page: ${url}`);
+      return "";
+    }
   }
 
   @Post()
   @SuccessResponse(204,  'Operation success.')
   public async crawlPage(
-    @Body() url: string
+    @Body() req: RequestPageDTO
   ): Promise<void> {
-    console.log("in function");
-    //try {
+    const url = 'https://'+req.URL;
+    try {
       //await CrawlerService.getInstance().getByURL(url);
-    //} catch(e) {
-        //crawler
-        //store
-      //if(e instanceof NoSuchPageError ){
-        //const crawler = new _Crawler({
-          //maxConnections :  10,
-          //callback: (error: any, res: any, done: any) => {
-            //console.log("in callback");
-            //if(error){
-              //console.log(error);
-            //}else{
-              //var $ = res.$;
-              //console.log($("title").text());
-              //CrawlerService.getInstance().store(url, ));
-            //}
-            //done();
-            //}
-        //});
-        //crawler.queue(url);
+      //if(e instanceof NoSuchPageError) {
+        console.log(`Starting crawler ${url}...`);
+        const crawler = new _Crawler({
+          maxConnections: 5,
+          callback: (error: any, res: any, done: any) => {
+            if(error){
+              console.log(error);
+            } else {
+              var $ = res.$;
+              console.log($("title").text());
+              //console.log(res.body);
+              CrawlerService.getInstance().store(req.URL, res.body);
+            }
+            done();
+          }
+        });
+        crawler.queue(url);
+    } catch(e) {
+      console.log(e);
         //crawler.on('drain', (options: any)=>{
           //console.log("in drain");
         //});
-        //console.log("maybe success?");
       //}
-    //}
-    //return;
+    }
   }
 
 }

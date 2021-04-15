@@ -9,13 +9,10 @@ export class Init1615878322530 implements MigrationInterface {
             name: '_id', type: 'int'
           },
           {
-            name: 'url', type: 'text'
+            name: 'URL', type: 'TEXT'
           },
           {
-            name: 'GET_param', type: 'text'
-          },
-          {
-            name: 'content', type: 'text'
+            name: 'DOM', type: 'LONGTEXT'
           }
         ]
       }), true);
@@ -23,11 +20,10 @@ export class Init1615878322530 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
       await this.createTable(queryRunner);
-      await queryRunner.query("ALTER TABLE `page` ADD `city` varchar(255) NOT NULL");
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query("ALTER TABLE `page` DROP COLUMN `city`");
+      //await queryRunner.query("ALTER TABLE `page` DROP COLUMN `city`");
     }
 
 }

@@ -1,6 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
 import { Init1615878322530 } from '@/migrations';
-import { page } from '@/entry/page';
+import { Page } from '@/entry';
 
 export default {
   type: 'mysql',
@@ -11,9 +11,9 @@ export default {
   database: 'webpages',
   dropSchema: false,
   entities: [
-    page,
+    Page,
   ],
-  migrations: [Init1615878322530],
+  migrations: [ Init1615878322530 ],
   migrationsRun: false,
   synchronize:  false,
   extra: {

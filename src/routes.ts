@@ -11,6 +11,11 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "RequestPageDTO": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"URL":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "User": {
         "dataType": "refObject",
         "properties": {
@@ -90,7 +95,7 @@ export function RegisterRoutes(app: express.Router) {
         app.post('/crawler',
             function (request: any, response: any, next: any) {
             const args = {
-                    url: {"in":"body","name":"url","required":true,"dataType":"string"},
+                    req: {"in":"body","name":"req","required":true,"ref":"RequestPageDTO"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
