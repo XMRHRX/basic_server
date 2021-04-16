@@ -17,17 +17,17 @@ export class Page {
   URL: string
   @Column({
     type: 'varchar', 
-    length: 5000, 
+    length: 256, 
     collation: 'utf8_unicode_ci', 
     nullable: true
   })
-  DOM: string
+  fileName: string
 
   constructor(param: Page = {} as Page){
     const {
       _id,
       URL, //www.google.com/hi
-      DOM
+      fileName
       //site, //www.google.com
       //domain, //google.com
       //uri,  //hi
@@ -35,14 +35,14 @@ export class Page {
 
     this._id = _id;
     this.URL = URL;
-    this.DOM = DOM;
+    this.fileName = fileName;
     //this.site = site;
     //this.domain = domain;
     //this.uri = uri;
   }
 
-  public async getDOM(): Promise<string> {
-    return this.DOM;
+  public async getFileName(): Promise<string> {
+    return this.fileName;
   }
 
 }

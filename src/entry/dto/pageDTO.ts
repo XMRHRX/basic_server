@@ -1,7 +1,7 @@
 
 export type PageDTO = {
   URL: string,
-  DOM: string, 
+  fileName: string, 
 }
 
 export type RequestPageDTO = {

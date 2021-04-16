@@ -12,7 +12,7 @@ export class Init1615878322530 implements MigrationInterface {
             name: 'URL', type: 'TEXT'
           },
           {
-            name: 'DOM', type: 'LONGTEXT'
+            name: 'fileName', type: 'TEXT'
           }
         ]
       }), true);

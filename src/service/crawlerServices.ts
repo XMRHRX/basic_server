@@ -27,7 +27,6 @@ export class CrawlerService {
       if( searchedPage === undefined ) {
         throw new NoSuchPageError(url);
       }
-      console.log("In getByURL: ", searchedPage);
       return searchedPage;
     } catch(e) {
         console.debug(e);
@@ -35,9 +34,9 @@ export class CrawlerService {
     }
   }
 
-  public async store(URL: string, DOM: string): Promise<void> {
+  public async store(URL: string, fileName: string): Promise<void> {
     const pageCli = getRepository(Page);
-    pageCli.insert({URL, DOM});
+    pageCli.insert({URL, fileName});
     return;
   }
 
