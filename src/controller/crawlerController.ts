@@ -50,13 +50,11 @@ export class CrawlerControler extends Controller {
     }
   }
 
-
-  @Post('test')
-  @SuccessResponse(204, 'Operation success.')
-  public async test(
-    @Body() input: string
-  ): Promise<string> {
-    return input;
+  @Get("list")
+  public async getList(
+  ): Promise<string[]> {
+    const urlList = await CrawlerService.getInstance().list();
+    return urlList;
   }
 
   @Get("{url}")
@@ -67,12 +65,11 @@ export class CrawlerControler extends Controller {
     try{
       page = await CrawlerService.getInstance().getByURL(url);
       const fileContent = fs.readFileSync(this.storageFolder + await page.getFileName()).toString();
-      console.log(fileContent);
       return fileContent;
     } catch( e ) {
       console.log(e);
       console.log(`Can not find page: ${url}`);
-      return "";
+      return "page not exist";
     }
   }
 
@@ -80,33 +77,46 @@ export class CrawlerControler extends Controller {
   @SuccessResponse(204,  'Operation success.')
   public async crawlPage(
     @Body() req: RequestPageDTO
-  ): Promise<void> {
+  ): Promise<number> {
     const url = 'https://'+req.URL;
+    let statusCode = -1;
+    /*
+     * -1: unknown status/failed
+     * 0: crawled success
+     * 1: page existed
+     */
     try {
       await CrawlerService.getInstance().getByURL(req.URL);
+      statusCode = 1;
     }catch(e) {
       if(e instanceof NoSuchPageError) {
         console.log(`Starting crawler ${url}...`);
-        const crawler = new _Crawler({
+        const crawler = new _Crawler();
+        crawler.direct({
+          url: url,
           maxConnections: 1,
-          callback: async (error: any, res: any, done: any) => {
+          options: {
+            retried: 1
+          },
+          callback: async (error: any, res: any) => {
             if(error){
               console.log(error);
+              statusCode = -1;
             } else {
               var $ = res.$;
               console.log("Crawled: " + $("title").text());
               const fileName = await this.randomNameFileStore(res.body);
               await CrawlerService.getInstance().store(req.URL, fileName);
+              statusCode = 0;
             }
-            done();
           }
         });
-        crawler.queue(url);
       }else {
         console.log(e);
         throw e;
       }
     }
+    return statusCode;
   }
 
 }

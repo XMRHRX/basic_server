@@ -3,3 +3,4 @@ build
 webPage/*
 .*
 !/.gitignore
+routes.ts

@@ -34,6 +34,16 @@ export class CrawlerService {
     }
   }
 
+  public async list(): Promise<string[]> {
+    const pageCli = getRepository(Page);
+    const pageList = await pageCli.find();
+    const urlList: string[] = [];
+    for(const page of pageList){
+      urlList.push(page.URL);
+    }
+    return urlList;
+  }
+
   public async store(URL: string, fileName: string): Promise<void> {
     const pageCli = getRepository(Page);
     pageCli.insert({URL, fileName});
