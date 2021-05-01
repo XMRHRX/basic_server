@@ -5,7 +5,6 @@ import bodyParser from "body-parser";
 import swaggerUi from 'swagger-ui-express';
 import { RegisterRoutes } from "@/routes";
 
-import { CrawlerService } from '@/service/crawlerServices';
 
 
 export default function AppInit(typeormConfig: ConnectionOptions): Promise<Express> {
@@ -36,7 +35,6 @@ export default function AppInit(typeormConfig: ConnectionOptions): Promise<Expre
 
     //console.log(typeormConfig);
     await createConnection(typeormConfig);
-    CrawlerService.init();
 
     RegisterRoutes(app);
 
