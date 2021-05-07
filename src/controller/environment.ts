@@ -2,6 +2,7 @@ import { Request as exRequest } from 'express';
 import { Body, Request, Get, Post, Route, Tags, Controller, Path} from 'tsoa';
 import { EnvironmentService } from '@/service';
 import { Environment, StoreEnvironmentDTO } from '@/entry';
+import { SensorHandler } from '@/component';
 // import { SignInRequire } from '@/utils';
 // detect
 
@@ -34,16 +35,16 @@ export class EnvironmentController extends Controller {
     await EnvironmentService.getInstance().store(param);
   }
 
-  @Post()
+  @Post('detect')
   public async detect(
   ): Promise <void> {
     console.debug('detect');
-    // sensor.detect()
-    // const param: StoreEnvironmentDTO = {
-      // humidity: sensor.getHumidity(),
-      // ultra_ray: sensor.getUltraRay(),
-    // }
-    // await EnvironmentService.getInstance().store(param);
+    const result = await SensorHandler.getInstance().detect();
+    const param: StoreEnvironmentDTO = {
+      humidity: result.humidity,
+      ultra_ray: result.ultra_ray,
+    };
+    await EnvironmentService.getInstance().store(param);
   }
 
 }

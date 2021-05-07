@@ -1,4 +1,5 @@
 import { Sensor, HumiditySensor, UltraRaySensor } from '@/component';
+import { ISensor, IEnviroment } from '@/entry';
 
 export class SensorHandler {
   private static instance: SensorHandler;
@@ -17,17 +18,12 @@ export class SensorHandler {
     return this.instance;
   }
 
-  public registerSensor(sensor: Sensor){
-    this.sensorList.push(sensor)
-  }
-
-  public detect(){
+  public listSensor(): ISensor[] {
+    const list: ISensor[] = [];
     for(const sensor of this.sensorList){
-      const result = sensor.detect();
-      if(sensor instanceof HumiditySensor){
-      } else if (sensor instanceof UltraRaySensor) {
-      }
+      list.push(sensor.toISensor());
     }
+    return list;
   }
 
   public getSensor(type: string): Sensor {
@@ -38,8 +34,27 @@ export class SensorHandler {
     }
     throw new Error('unknow sensor type');
   }
+
+  public registerSensor(sensor: Sensor){
+    this.sensorList.push(sensor)
+  }
+
+  public detect(): IEnviroment{
+    const enviroment: IEnviroment = {
+      humidity: null,
+      ultra_ray: null,
+    }
+    for(const sensor of this.sensorList){
+      if(sensor instanceof HumiditySensor){
+        enviroment.humidity = sensor.getData();
+      } else if (sensor instanceof UltraRaySensor) {
+        enviroment.ultra_ray = sensor.getData();
+      } else {
+        throw new Error('unexpected instance type');
+      }
+    }
+    return enviroment;
+  }
+
 }
 
-export interface IRegisterSensor {
-  type: string,
-}
