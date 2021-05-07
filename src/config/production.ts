@@ -1,6 +1,7 @@
 import { ConnectionOptions } from 'typeorm';
 import { Init1615878322530 } from '@/migrations';
 // import { Page } from '@/entry';
+import { Environment } from '@/entry';
 
 export default {
   type: 'mysql',
@@ -11,6 +12,7 @@ export default {
   database: 'webpages',
   dropSchema: false,
   entities: [
+    Environment
     // Page,
   ],
   migrations: [ Init1615878322530 ],
