@@ -37,6 +37,9 @@ export class Environment  {
     this.ultra_ray = ultra_ray;
     this.date = date;
   }
+}
 
-
+export interface IEnviroment {
+  humidity: number | null,
+  ultra_ray: number | null,
 }
