@@ -1,4 +1,4 @@
-import { Sensor, HumiditySensor, UltraRaySensor } from '@/component';
+import { Sensor, HumiditySensor, UltraRaySensor, TemperatureSensor } from '@/component';
 import { ISensor, IEnviroment } from '@/entry';
 
 export class SensorHandler {
@@ -43,12 +43,15 @@ export class SensorHandler {
     const enviroment: IEnviroment = {
       humidity: null,
       ultra_ray: null,
+      temperature: null,
     }
     for(const sensor of this.sensorList){
       if(sensor instanceof HumiditySensor){
         enviroment.humidity = sensor.getData();
       } else if (sensor instanceof UltraRaySensor) {
         enviroment.ultra_ray = sensor.getData();
+      } else if (sensor instanceof TemperatureSensor) {
+        enviroment.temperature = sensor.getData();
       } else {
         throw new Error('unexpected instance type');
       }

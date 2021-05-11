@@ -17,9 +17,15 @@ export class Environment  {
   })
   protected ultra_ray: number | null;
   @Column({
-    nullable: false,
-    default:  () => 'CURRENT_TIMESTAMP',
-    type: 'datetime',
+    type: 'double',
+    unsigned: true,
+    nullable: true
+  })
+  protected temperature: number | null;
+  @Column({
+    type: 'double',
+    unsigned: true,
+    nullable: true
   })
   protected date?: Date;
 
@@ -30,11 +36,13 @@ export class Environment  {
       _id,
       humidity,
       ultra_ray,
+      temperature,
       date,
     } = param;
     this._id = _id;
     this.humidity = humidity;
     this.ultra_ray = ultra_ray;
+    this.temperature = temperature;
     this.date = date;
   }
 }
@@ -42,4 +50,5 @@ export class Environment  {
 export interface IEnviroment {
   humidity: number | null,
   ultra_ray: number | null,
+  temperature: number | null,
 }

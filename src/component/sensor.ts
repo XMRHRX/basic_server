@@ -69,3 +69,21 @@ export class UltraRaySensor extends Sensor {
   }
 }
 
+export class TemperatureSensor extends Sensor {
+  private temperature: number | null;
+  constructor(){
+    super('temperature');
+    this.temperature = null;
+  }
+  public detect() {
+    /* implement */
+    return 0;
+  }
+  public getData(){
+    return this.temperature;
+  }
+  public getDataType(){
+    return this.dataType;
+  }
+}
+
