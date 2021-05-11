@@ -31,6 +31,7 @@ export class EnvironmentController extends Controller {
     const param: StoreEnvironmentDTO = {
       humidity: form['humidity'],
       ultra_ray: form['ultra_ray'],
+      temperature: form['temperature'],
     }
     await EnvironmentService.getInstance().store(param);
   }
@@ -43,8 +44,15 @@ export class EnvironmentController extends Controller {
     const param: StoreEnvironmentDTO = {
       humidity: result.humidity,
       ultra_ray: result.ultra_ray,
+      temperature: result.temperature,
     };
     await EnvironmentService.getInstance().store(param);
+  }
+
+  @Post('protect')
+  public async protect(
+  ): Promise<void> {
+    //
   }
 
 }

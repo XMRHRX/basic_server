@@ -39,6 +39,7 @@ export class EnvironmentService {
     await this.environmentRepo.insert({
       humidity: param.humidity,
       ultra_ray: param.ultra_ray,
+      temperature: param.temperature,
     })
   }
 }
