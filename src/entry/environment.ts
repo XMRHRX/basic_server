@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { EnviromentInfoDTO } from '@/entry';
+import { EnvironmentInfoDTO } from '@/entry';
 
 @Entity({ name: 'enviroment' })
 export class Environment  {
@@ -47,8 +47,8 @@ export class Environment  {
     this.date = date || new Date();
   }
   
-  public getEnvironmentInfoDTO(): EnviromentInfoDTO {
-    const param: EnviromentInfoDTO = {
+  public getEnvironmentInfoDTO(): EnvironmentInfoDTO {
+    const param: EnvironmentInfoDTO = {
       humidity: this.humidity,
       temperature: this.temperature,
       ultra_ray: this.ultra_ray,

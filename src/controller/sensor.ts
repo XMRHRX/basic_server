@@ -34,12 +34,16 @@ export class ComponentController extends Controller {
     @Body() form: SensorInfoDTO,
   ): Promise<void> {
     // check id exist
-    if( await SensorHandler.getInstance().verify(form['id']) === false){
+    try{
+      const sensors = await SensorHandler.getInstance().getSensorById(form['id']);
+      let param = await SensorHandler.getInstance().createDefaultEnvironmentInfoDTO();
+      param = sensors.fitEnvironmentInfoDTO(param);
+      await EnvironmentService.getInstance().store(param);
+    }catch(e) {
+      console.log(e);
       this.setStatus(401);
       return;
     }
-    let param = await SensorHandler.getInstance().createDefaultEnvironmentInfoDTO(form['id']);
-    await EnvironmentService.getInstance().store(param);
   }
 
   /* And motor or other component below */

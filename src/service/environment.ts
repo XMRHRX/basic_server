@@ -1,5 +1,5 @@
 import { getRepository, Repository } from 'typeorm';
-import { Environment, StoreEnvironmentDTO, EnviromentInfoDTO } from '@/entry';
+import { Environment, StoreEnvironmentDTO, EnvironmentInfoDTO } from '@/entry';
 
 export class EnvironmentService {
   private static instance: EnvironmentService;
@@ -20,7 +20,7 @@ export class EnvironmentService {
     return this.instance;
   }
 
-  public async getById(_id: number): Promise<EnviromentInfoDTO> {
+  public async getById(_id: number): Promise<EnvironmentInfoDTO> {
     const environment: Environment | undefined = await this.environmentRepo.findOne({
       _id: _id,
     });

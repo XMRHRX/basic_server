@@ -1,5 +1,5 @@
-import { Sensor, HumiditySensor, UltraRaySensor, TemperatureSensor, SensorFactory } from '@/component';
-import { EnvironmentInfoDTO, SensorInfoDTO, SensorListDTO } from '@/entry';
+import { Sensor, SensorFactory } from '@/component';
+import { EnvironmentInfoDTO, SensorListDTO } from '@/entry';
 
 export class SensorHandler {
   private static instance: SensorHandler;
@@ -19,7 +19,7 @@ export class SensorHandler {
   }
 
 
-  private createDefaultEnvironmentInfoDTO(): EnvironmentInfoDTO {
+  public createDefaultEnvironmentInfoDTO(): EnvironmentInfoDTO {
     const param: EnvironmentInfoDTO = {
       humidity: null,
       ultra_ray: null,
@@ -45,42 +45,19 @@ export class SensorHandler {
     throw new Error('sensor not exist');
   }
 
-  // factory or strategy???
   public registerSensor(name: string, type: string) {
     const sensor = SensorFactory.getInstance().createSensor(name, type);
     this.sensorList.push(sensor);
     return sensor.getId();
   }
 
-  public fitEnvironmentInfoDTO(dto: EnvironmentInfoDTO, sensor: Sensor) {
-    const sensorType = sensor.getDataType();
-    const data = sensor.getData();
-    if(sensorType === 'humidity'){
-      dto.humidity = data;
-    }else if(sensorType === 'ultra_ray'){
-      dto.ultra_ray = data;
-    }else if(sensorType === 'temperature'){
-      dto.temperature = data;
-    }
-  }
-
   public detect(): EnvironmentInfoDTO {
-    const dto: EnvironmentInfoDTO = {}
+    let dto: EnvironmentInfoDTO = this.createDefaultEnvironmentInfoDTO();
     for(const sensor of this.sensorList){
-      this.fitEnvironmentInfoDTO(dto, sensor)
-      // enviroment = sensor.fitEnvironmentInfoDTO(enviroment);
+      // this.fitEnvironmentInfoDTO(dto, sensor)
+      dto = sensor.fitEnvironmentInfoDTO(dto);
     }
-    return enviroment;
-  }
-
-  public verify(_id: string): boolean {
-    for(const sensor of this.sensorList){
-      const field = sensor.toSensorInfoDTO();
-      if(field.id === _id){
-        return true;
-      }
-    }
-    return false;
+    return dto;
   }
 
 }
