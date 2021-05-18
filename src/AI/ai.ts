@@ -1,15 +1,17 @@
 import { default as Crawler }  from 'crawler';
-import { IAISetting } from '@/entry';
+import { AISettingDTO } from '@/entry';
 
 export class AI {
   private data: any;
-  private setting: IAISetting = {Authorization: '', locationName: []};
+  private token: string = 'CWB-021B447A-7581-4875-8BDA-3AF52E29F702';
+  private locationName: string = '%E9%9B%B2%E6%9E%97%E7%B8%A3';
+  private setting: AISettingDTO = {};
 
   constructor(){
-    this.setting.Authorization = 'CWB-021B447A-7581-4875-8BDA-3AF52E29F702';
+    // this.setting.Authorization =;
   }
 
-  private prepareQuery(url: string, param: IAISetting): string {
+  private prepareQuery(url: string, param: AISettingDTO): string {
     url+='?';
     for(const [key, value] of Object.entries(param)){
       console.log(key, value);
@@ -65,42 +67,41 @@ export class AI {
     // predict(data);
   }
 
-  public set(param: IAISetting = {Authorization: this.setting.Authorization, locationName: this.setting.locationName}){
-    param.Authorization = this.setting.Authorization;
+  public set(param: AISettingDTO = {}){
     this.setting = param;
   }
 
-  public setLimit(limit?: number){
-    this.setting.limit = limit;
-  }
-  public setOffset(offset?: number){
-    this.setting.offset = offset;
+  // public setLimit(limit?: number){
+    // this.setting.limit = limit;
+  // }
+  // public setOffset(offset?: number){
+    // this.setting.offset = offset;
 
-  }
-  public setFormat(format?: string){
-    this.setting.format = format;
-  }
-  public setLocationName(locationName: string[]){
-    this.setting.locationName = locationName;
-  }
-  public setElementName(elementName?: string[]){
-    this.setting.elementName = elementName;
-  }
-  public setSort(sort?: string){
+  // }
+  // public setFormat(format?: string){
+    // this.setting.format = format;
+  // }
+  // public setLocationName(locationName: string[]){
+    // this.setting.locationName = locationName;
+  // }
+  // public setElementName(elementName?: string[]){
+    // this.setting.elementName = elementName;
+  // }
+  // public setSort(sort?: string){
     // this.setting.sort = sort;
-  }
-  public setStartTime(startTime?: string[]){
-    this.setting.startTime = startTime;
-  }
-  public setDataTime(dataTime?: string[]){
-    this.setting.dataTime = dataTime;
-  }
-  public setTimeFrom(timeFrom?: string){
-    this.setting.timeFrom = timeFrom;
-  }
-  public setTimeTo(timeTo?: string){
-    this.setting.timeTo = timeTo;
-  }
+  // }
+  // public setStartTime(startTime?: string[]){
+    // this.setting.startTime = startTime;
+  // }
+  // public setDataTime(dataTime?: string[]){
+    // this.setting.dataTime = dataTime;
+  // }
+  // public setTimeFrom(timeFrom?: string){
+    // this.setting.timeFrom = timeFrom;
+  // }
+  // public setTimeTo(timeTo?: string){
+    // this.setting.timeTo = timeTo;
+  // }
 
   
 }
