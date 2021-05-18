@@ -1,7 +1,8 @@
-import { Request as exRequest } from 'express';
+import { Request as exRequest,  } from 'express';
 import { Controller, Tags, Route, Get, Post, Body, Request } from 'tsoa';
 import { SensorHandler } from '@/component'
-import { ISensor, IRegisterSensor} from '@/entry';
+import { EnvironmentService } from '@/service';
+import { StoreEnvironmentDTO, SensorInfoDTO, SensorListDTO , RegisterResponseDTO, RegisterSensorDTO } from '@/entry';
 
 @Tags('Component')
 @Route('component')
@@ -10,20 +11,35 @@ export class ComponentController extends Controller {
   @Post('sensors/register')
   public async registerSensor(
     @Request() req: exRequest,
-    @Body() form: IRegisterSensor,
-  ): Promise<void>{
+    @Body() form: RegisterSensorDTO,
+  ): Promise<RegisterResponseDTO>{
     console.debug('sensors/regsiter');
     console.log(form);
-    const sensorInstance = await SensorHandler.getInstance().getSensor(form['type'])
-    await SensorHandler.getInstance().registerSensor(sensorInstance);
+    return {
+      id: await SensorHandler.getInstance().registerSensor(form['type'], form['name']),
+    }
   }
 
   @Get('sensors/list')
   public async listSensor(
     @Request() req: exRequest
-  ): Promise<ISensor[]> {
+  ): Promise<SensorListDTO> {
     console.debug('sensors/list');
     return await SensorHandler.getInstance().listSensor();
+  }
+
+  @Post('sensors')
+  public async storeInfo(
+    @Request() req: exRequest,
+    @Body() form: SensorInfoDTO,
+  ): Promise<void> {
+    // check id exist
+    if( await SensorHandler.getInstance().verify(form['id']) === false){
+      this.setStatus(401);
+      return;
+    }
+    let param = await SensorHandler.getInstance().createDefaultEnvironmentInfoDTO(form['id']);
+    await EnvironmentService.getInstance().store(param);
   }
 
   /* And motor or other component below */

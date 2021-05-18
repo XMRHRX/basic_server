@@ -1,5 +1,5 @@
-import { Sensor, HumiditySensor, UltraRaySensor, TemperatureSensor } from '@/component';
-import { ISensor, IEnviroment } from '@/entry';
+import { Sensor, HumiditySensor, UltraRaySensor, TemperatureSensor, SensorFactory } from '@/component';
+import { EnvironmentInfoDTO, SensorInfoDTO, SensorListDTO } from '@/entry';
 
 export class SensorHandler {
   private static instance: SensorHandler;
@@ -18,45 +18,69 @@ export class SensorHandler {
     return this.instance;
   }
 
-  public listSensor(): ISensor[] {
-    const list: ISensor[] = [];
-    for(const sensor of this.sensorList){
-      list.push(sensor.toISensor());
-    }
-    return list;
-  }
 
-  public getSensor(type: string): Sensor {
-    if(type === 'humidity'){
-      return new HumiditySensor();
-    }else if(type === 'ultra_ray'){
-      return new UltraRaySensor();
-    }
-    throw new Error('unknow sensor type');
-  }
-
-  public registerSensor(sensor: Sensor){
-    this.sensorList.push(sensor)
-  }
-
-  public detect(): IEnviroment{
-    const enviroment: IEnviroment = {
+  private createDefaultEnvironmentInfoDTO(): EnvironmentInfoDTO {
+    const param: EnvironmentInfoDTO = {
       humidity: null,
       ultra_ray: null,
       temperature: null,
     }
+    return param
+  }
+
+  public listSensor(): SensorListDTO {
+    const list: SensorListDTO = {sensors: []};
+    for(const sensor of this.sensorList) {
+      list.sensors.push(sensor.toSensorInfoDTO());
+    }
+    return list;
+  }
+
+  public getSensorById(id: string): Sensor {
     for(const sensor of this.sensorList){
-      if(sensor instanceof HumiditySensor){
-        enviroment.humidity = sensor.getData();
-      } else if (sensor instanceof UltraRaySensor) {
-        enviroment.ultra_ray = sensor.getData();
-      } else if (sensor instanceof TemperatureSensor) {
-        enviroment.temperature = sensor.getData();
-      } else {
-        throw new Error('unexpected instance type');
+      if(sensor.getId() === id){
+        return sensor;
       }
     }
+    throw new Error('sensor not exist');
+  }
+
+  // factory or strategy???
+  public registerSensor(name: string, type: string) {
+    const sensor = SensorFactory.getInstance().createSensor(name, type);
+    this.sensorList.push(sensor);
+    return sensor.getId();
+  }
+
+  public fitEnvironmentInfoDTO(dto: EnvironmentInfoDTO, sensor: Sensor) {
+    const sensorType = sensor.getDataType();
+    const data = sensor.getData();
+    if(sensorType === 'humidity'){
+      dto.humidity = data;
+    }else if(sensorType === 'ultra_ray'){
+      dto.ultra_ray = data;
+    }else if(sensorType === 'temperature'){
+      dto.temperature = data;
+    }
+  }
+
+  public detect(): EnvironmentInfoDTO {
+    const dto: EnvironmentInfoDTO = {}
+    for(const sensor of this.sensorList){
+      this.fitEnvironmentInfoDTO(dto, sensor)
+      // enviroment = sensor.fitEnvironmentInfoDTO(enviroment);
+    }
     return enviroment;
+  }
+
+  public verify(_id: string): boolean {
+    for(const sensor of this.sensorList){
+      const field = sensor.toSensorInfoDTO();
+      if(field.id === _id){
+        return true;
+      }
+    }
+    return false;
   }
 
 }

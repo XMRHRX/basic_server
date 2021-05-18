@@ -5,7 +5,8 @@ import bodyParser from "body-parser";
 import swaggerUi from 'swagger-ui-express';
 
 import { RegisterRoutes } from "@/routes";
-import { SensorHandler } from '@/component';
+import { SensorHandler, SensorFactory } from '@/component';
+// import { APIErrors } from '@/error';
 // import * as swaggerDocument from './swagger.json' //https: //sean-bradley.medium.com/add-swagger-ui-to-existing-nodejs-typescript-api-882ca7aded90
 import { EnvironmentService } from '@/service';
 
@@ -38,10 +39,10 @@ export default function AppInit(typeormConfig: ConnectionOptions): Promise<Expre
     // );
 
     //console.log(typeormConfig);
-    await createConnection(typeormConfig);
-    await EnvironmentService.init();
-    await SensorHandler.init();
     RegisterRoutes(app);
+    await SensorFactory.init();
+    await EnvironmentService.init();
+    // app.use(APIErrors);
 
     return resolve(app);
   });

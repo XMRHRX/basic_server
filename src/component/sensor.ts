@@ -1,29 +1,22 @@
-import { ISensor } from '@/entry';
-
-function getID(length: number): string{
-  var result           = [];
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghipqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++ ) {
-    result.push(characters.charAt(Math.floor(Math.random() * 
-    charactersLength)));
-  }
-  return result.join('');
-}
+import { EnvironmentInfoDTO, SensorInfoDTO } from '@/entry';
 
 export abstract class Sensor {
   protected id: string;
+  protected name: string;
   protected dataType: string;
 
-  constructor(dataType: string){
+  constructor(id: string, dataType: string, name: string){
+    this.id = id
     this.dataType = dataType;
-    this.id = getID(32);
+    this.name = name;
   }
 
   public abstract detect(): number;
   public abstract getData(): number | null;
   public abstract getDataType(): string;
-  public toISensor(): ISensor{
+  public abstract fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO;
+  public getId(){ return this.id; };
+  public toSensorInfoDTO(): SensorInfoDTO {
     return {
       id: this.id,
       dataType: this.getDataType(),
@@ -34,8 +27,8 @@ export abstract class Sensor {
 
 export class HumiditySensor extends Sensor {
   private humidity: number | null;
-  constructor(){
-    super('humidity');
+  constructor(id: string, name: string){
+    super(id, 'humidity', name);
     this.humidity = null;
   }
   public detect() {
@@ -49,12 +42,17 @@ export class HumiditySensor extends Sensor {
     return this.dataType;
   }
 
+  public fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO{
+    env.humidity = this.getData();
+    return env;
+  }
+
 }
 
 export class UltraRaySensor extends Sensor {
   private ultra_ray: number | null;
-  constructor(){
-    super('ultra_ray');
+  constructor(id: string, name: string) {
+    super(id, 'ultra_ray', name);
     this.ultra_ray = null;
   }
   public detect() {
@@ -67,12 +65,16 @@ export class UltraRaySensor extends Sensor {
   public getDataType(){
     return this.dataType;
   }
+  public fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO{
+    env.ultra_ray = this.getData();
+    return env;
+  }
 }
 
 export class TemperatureSensor extends Sensor {
   private temperature: number | null;
-  constructor(){
-    super('temperature');
+  constructor(id: string, name: string){
+    super(id, 'temperature', name);
     this.temperature = null;
   }
   public detect() {
@@ -84,6 +86,10 @@ export class TemperatureSensor extends Sensor {
   }
   public getDataType(){
     return this.dataType;
+  }
+  public fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO{
+    env.temperature = this.getData();
+    return env;
   }
 }
 
