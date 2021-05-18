@@ -1,0 +1,1 @@
+curl -X GET "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-091?Authorization=CWB-021B447A-7581-4875-8BDA-3AF52E29F702&limit=10&offset=0&format=JSON&locationName=%E9%9B%B2%E6%9E%97%E7%B8%A3" -H  "accept: application/json"
