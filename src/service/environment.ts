@@ -1,5 +1,5 @@
 import { getRepository, Repository } from 'typeorm';
-import { Environment, StoreEnvironmentDTO } from '@/entry';
+import { Environment, StoreEnvironmentDTO, EnviromentInfoDTO } from '@/entry';
 
 export class EnvironmentService {
   private static instance: EnvironmentService;
@@ -20,26 +20,20 @@ export class EnvironmentService {
     return this.instance;
   }
 
-  public async getById(_id: number): Promise<Environment> {
+  public async getById(_id: number): Promise<EnviromentInfoDTO> {
     const environment: Environment | undefined = await this.environmentRepo.findOne({
       _id: _id,
     });
     if(environment === undefined){
       throw new Error();
     }
-    return environment;
+    return environment.getEnvironmentInfoDTO();
   }
-
-  // public async getByDate(): Promise<Date> {
-    // return new Date;
-  // }
-
 
   public async store(param: StoreEnvironmentDTO) {
     await this.environmentRepo.insert({
-      humidity: param.humidity,
-      ultra_ray: param.ultra_ray,
-      temperature: param.temperature,
-    })
+      ...param,
+      date: new Date(),
+    });
   }
 }
