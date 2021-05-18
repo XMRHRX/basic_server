@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { EnviromentInfoDTO } from '@/entry';
 
 @Entity({ name: 'enviroment' })
 export class Environment  {
@@ -23,12 +24,12 @@ export class Environment  {
   })
   protected temperature: number | null;
   @Column({
-    type: 'double',
-    unsigned: true,
-    nullable: true
+    // type: 'double',
+    type: 'datetime',
+    // unsigned: true,
+    // nullable: true
   })
-  protected date?: Date;
-
+  protected date: Date;
 
   constructor(param: Environment = {} as Environment){
 // humidity: number, ultra_ray: number, _id?: string
@@ -43,12 +44,15 @@ export class Environment  {
     this.humidity = humidity;
     this.ultra_ray = ultra_ray;
     this.temperature = temperature;
-    this.date = date;
+    this.date = date || new Date();
   }
-}
-
-export interface IEnviroment {
-  humidity: number | null,
-  ultra_ray: number | null,
-  temperature: number | null,
+  
+  public getEnvironmentInfoDTO(): EnviromentInfoDTO {
+    const param: EnviromentInfoDTO = {
+      humidity: this.humidity,
+      temperature: this.temperature,
+      ultra_ray: this.ultra_ray,
+    };
+    return param;
+  }
 }
