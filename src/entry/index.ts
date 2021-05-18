@@ -1,4 +1,5 @@
-export * from './AI';
-export * from './environment';
+export * from './dto/ai';
 export * from './dto/environment';
-export * from './sensor';
+export * from './dto/sensor';
+
+export * from './environment';
