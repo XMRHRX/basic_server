@@ -39,9 +39,13 @@ export default function AppInit(typeormConfig: ConnectionOptions): Promise<Expre
     // );
 
     //console.log(typeormConfig);
-    RegisterRoutes(app);
-    await SensorFactory.init();
+    console.log(typeormConfig);
+    await createConnection(typeormConfig);
     await EnvironmentService.init();
+    await SensorHandler.init();
+    await SensorFactory.init();
+    RegisterRoutes(app);
+
     // app.use(APIErrors);
 
     return resolve(app);

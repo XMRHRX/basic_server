@@ -21,19 +21,23 @@ export class EnvironmentService {
   }
 
   public async getById(_id: number): Promise<EnvironmentInfoDTO> {
-    const environment: Environment | undefined = await this.environmentRepo.findOne({
-      _id: _id,
-    });
-    if(environment === undefined){
-      throw new Error();
+    // const environment: Environment | undefined = await this.environmentRepo.findOne({
+      // _id: _id,
+    // });
+    // if(environment === undefined){
+      // throw new Error();
+    // }
+    // return environment.getEnvironmentInfoDTO();
+    return {
+      humidity: null,
+      temperature: null,
+      ultra_ray: null,
     }
-    return environment.getEnvironmentInfoDTO();
   }
 
   public async store(param: StoreEnvironmentDTO) {
-    await this.environmentRepo.insert({
-      ...param,
-      date: new Date(),
-    });
+    type error so check the tutorial of insert and typeorm
+    await this.environmentRepo.insert({_id: 123, humidity: param.humidity, ultra_ray: param.ultra_ray, temperature: param.temperature, date: new Date().toString() });
+    // date: new Date(),
   }
 }
