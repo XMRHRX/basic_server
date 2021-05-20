@@ -27,7 +27,7 @@ export class Environment  {
   protected temperature?: number | null;
   @Column({
     type: 'datetime',
-    default: null,
+    // default: null,
   })
   protected date: string;
 
@@ -44,7 +44,7 @@ export class Environment  {
     this.humidity = humidity;
     this.ultra_ray = ultra_ray;
     this.temperature = temperature;
-    this.date = date || new Date().toString()
+    this.date = new Date().toString()
   }
 
   public getEnvironmentInfoDTO(): EnvironmentInfoDTO {

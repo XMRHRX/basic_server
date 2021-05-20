@@ -1,5 +1,5 @@
 import { Controller, Tags, Route, Get, Post } from 'tsoa';
-import { AISettingDTO } from '@/entry';
+import { AISettingDTO, PredictResultDTO } from '@/entry';
 import { AI } from '@/AI';
 
 @Tags('AI')
@@ -7,7 +7,7 @@ import { AI } from '@/AI';
 export class AIController extends Controller {
 
   @Get()
-  public async predict(): Promise<string> {
+  public async predict(): Promise<PredictResultDTO> {
     const ai = new AI();
     const param: AISettingDTO = {
       // Authorization: '_', // would be replace in the setting function, so could be anything
@@ -16,7 +16,7 @@ export class AIController extends Controller {
     }
     ai.set(param);
     ai.predict();
-    return "";
+    return {};
     // 1. sensor informatin/DB information
     // 2. AI information
     // opt 3. classify

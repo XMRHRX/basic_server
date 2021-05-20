@@ -13,6 +13,10 @@
     // timeFrom?: string, //string($date-time)
     // timeTo?: string, //string($date-time)
 // }
+//
+export interface PredictResultDTO{
+
+}
 
 export interface AISettingDTO{
     limit?: number,
