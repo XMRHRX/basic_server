@@ -1,0 +1,157 @@
+@startuml
+/' controller '/
+class EnvironmentController extends Controller {
+  +getEnvironment(_id: number): EnvironmentInfoDTO
+  +detect(): void
+  /' +protect(): void '/
+}
+
+class AIController extends Controller {
+  +predict(): PredictResultDTO 
+  /' +protect(): void '/
+
+}
+
+class ComponentController extends Controller {
+  +registerSensor(req: Request, form: RegisterSensorDTO): RegisterResponseDTO 
+  +listSensor(req: Request): SensorListDTO
+  +storeInfo(req: Request, form: SensorInfoDTO): void
+}
+
+/' service '/
+interface AISettingDTO {
+    +limit?: number | undefined
+    +offset?: number | undefined
+    +format?: string | undefined
+    +elementName?: string[] | undefined
+    +sort?: "time" | undefined
+    +startTime?: string[] | undefined
+    +dataTime?: string[] | undefined
+    +timeFrom?: string | undefined
+    +timeTo?: string | undefined
+}
+interface EnvironmentInfoDTO {
+    +humidity?: number | null | undefined
+    +ultra_ray?: number | null | undefined
+    +temperature?: number | null | undefined
+}
+interface RegisterResponseDTO {
+    +id: string
+}
+interface RegisterSensorDTO {
+    +name: string
+    +type: string
+}
+class AI {
+    -data: any
+    -token: string
+    -locationName: string
+    -setting: AISettingDTO
+    -prepareQuery(url: string, param: AISettingDTO): string
+    -getData(): void
+    +predict(): void
+    +set(param?: AISettingDTO): void
+}
+interface AISettingDTO {
+    +limit?: number | undefined
+    +offset?: number | undefined
+    +format?: string | undefined
+    +elementName?: string[] | undefined
+    +sort?: "time" | undefined
+    +startTime?: string[] | undefined
+    +dataTime?: string[] | undefined
+    +timeFrom?: string | undefined
+    +timeTo?: string | undefined
+}
+interface PredictResultDTO {
+
+}
+interface StoreEnvironmentDTO {
+    +humidity?: number | null | undefined
+    +ultra_ray?: number | null | undefined
+    +temperature?: number | null | undefined
+}
+interface SensorListDTO {
+    +sensors: SensorInfoDTO[]
+}
+interface SensorInfoDTO {
+    +id: string
+    +dataType: string
+    +value: number | null
+}
+class Environment {
+    #_id?: number | undefined
+    #humidity?: number | null | undefined
+    #ultra_ray?: number | null | undefined
+    #temperature?: number | null | undefined
+    #date: string
+    +getEnvironmentInfoDTO(): EnvironmentInfoDTO
+}
+abstract class Sensor {
+    #id: string
+    #name: string
+    #dataType: string
+    +{abstract} detect(): number
+    +{abstract} getData(): number | null
+    +{abstract} getDataType(): string
+    +{abstract} fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO
+    +getId(): string
+    +toSensorInfoDTO(): SensorInfoDTO
+}
+class HumiditySensor extends Sensor {
+    -humidity: number | null
+    +detect(): number
+    +getData(): number | null
+    +getDataType(): string
+    +fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO
+}
+class UltraRaySensor extends Sensor {
+    -ultra_ray: number | null
+    +detect(): number
+    +getData(): number | null
+    +getDataType(): string
+    +fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO
+}
+class TemperatureSensor extends Sensor {
+    -temperature: number | null
+    +detect(): number
+    +getData(): number | null
+    +getDataType(): string
+    +fitEnvironmentInfoDTO(env: EnvironmentInfoDTO): EnvironmentInfoDTO
+}
+class SensorHandler {
+    -sensorList: Sensor[]
+    +createDefaultEnvironmentInfoDTO(): EnvironmentInfoDTO
+    +listSensor(): SensorListDTO
+    +getSensorById(id: string): Sensor
+    +registerSensor(name: string, type: string): string
+    +detect(): EnvironmentInfoDTO
+    -{static} instance: SensorHandler
+    +{static} init(): SensorHandler
+    +{static} getInstance(): SensorHandler
+}
+class SensorFactory {
+    -createId(length: number): string
+    +createSensor(name: string, type: string): Sensor
+    +{static} instance: SensorFactory
+    +{static} init(): void
+    +{static} getInstance(): SensorFactory
+}
+Sensor *-- EnvironmentInfoDTO
+Sensor *-- SensorInfoDTO
+HumiditySensor *-- EnvironmentInfoDTO
+UltraRaySensor *-- EnvironmentInfoDTO
+TemperatureSensor *-- EnvironmentInfoDTO
+SensorHandler *-- Sensor
+SensorHandler *-- EnvironmentInfoDTO
+SensorHandler *-- SensorListDTO
+SensorFactory *-- Sensor
+SensorListDTO *-- SensorInfoDTO
+Environment *-- EnvironmentInfoDTO
+AI *-- AISettingDTO
+ComponentController *-- RegisterSensorDTO
+ComponentController *-- RegisterResponseDTO
+ComponentController *-- SensorListDTO
+ComponentController *-- SensorInfoDTO
+AIController *-- PredictResultDTO
+@enduml

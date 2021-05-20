@@ -1,0 +1,18 @@
+@startuml
+Farmer -> GUI: click detect button
+GUI -> EnvironmentController: start detect
+EnvironmentController -> SensorHandler: triggerDetect(): void
+SensorHandler -> ServerSocket: start detect signal
+ServerSocket -> RespoberryPiSocket: sent start detect
+RespoberryPiSocket -> RespoberryPiSensor: start detect()
+RespoberryPiSensor -> sensorIO: electronic signal
+sensorIO ->  RespoberryPiSensor: environment information
+RespoberryPiSensor -> RespoberryPiSocket: pass information
+RespoberryPiSocket -> SensorController: storeInfo(SensorInfoDTO): void
+SensorController -> EnvironmentService: storeInfo(SensorInfoDTO): void
+EnvironmentService -> DatabseORM: insert(SensorInfoDTO): void
+EnvironmentController -> EnvironmentService: getByDate(currentDate): Environment
+EnvironmentService -> DatabseORM: findOne(condition): Environment
+EnvironmentController -> GUI: return response
+GUI -> Farmer: show response
+@enduml
