@@ -6,8 +6,8 @@
   "scripts": {
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli.js",
-    "migrate": "ts-node script/migration.ts",
-    "migrate:build": "yarn run build && ts-node script/migration.ts",
+    "migrate": "sh script/migrate_build.sh && yarn run migrate:light",
+    "migrate:light": "ts-node script/migration.ts",
     "serve": "yarn run build && node build/server.js",
     "serve:swagger": "yarn run build swagger && node build/server.js",
     "build": "sh script/build.sh",
