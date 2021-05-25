@@ -1,5 +1,6 @@
 import { Sensor, SensorFactory } from '@/component';
-import { EnvironmentInfoDTO, SensorListDTO } from '@/entry';
+import { EnvironmentInfoDTO } from '@/entry';
+import { SensorGroupService } from '@/service';
 
 export class SensorHandler {
   private static instance: SensorHandler;
@@ -28,37 +29,31 @@ export class SensorHandler {
     return param
   }
 
-  public listSensor(): SensorListDTO {
-    const list: SensorListDTO = {sensors: []};
-    for(const sensor of this.sensorList) {
-      list.sensors.push(sensor.toSensorInfoDTO());
-    }
-    return list;
-  }
-
-  public getSensorById(id: string): Sensor {
+  public getSensorByType(type: string): Sensor {
     for(const sensor of this.sensorList){
-      if(sensor.getId() === id){
+      if(sensor.getDataType() === type){
         return sensor;
       }
     }
     throw new Error('sensor not exist');
   }
 
-  public registerSensor(name: string, type: string) {
-    const sensor = SensorFactory.getInstance().createSensor(name, type);
-    this.sensorList.push(sensor);
-    return sensor.getId();
+  public async registerSensor(name: string, sensorsGroup: string[]) {
+    for(const sensorName of sensorsGroup){
+      const sensor = SensorFactory.getInstance().createSensor(name, sensorName);
+      this.sensorList.push(sensor);
+    }
+    return await SensorGroupService.getInstance().store(name, sensorsGroup)
   }
 
-  public detect(): EnvironmentInfoDTO {
-    let dto: EnvironmentInfoDTO = this.createDefaultEnvironmentInfoDTO();
-    for(const sensor of this.sensorList){
+  // public detect(): EnvironmentInfoDTO {
+    // let dto: EnvironmentInfoDTO = this.createDefaultEnvironmentInfoDTO();
+    // for(const sensor of this.sensorList){
       // this.fitEnvironmentInfoDTO(dto, sensor)
-      dto = sensor.fitEnvironmentInfoDTO(dto);
-    }
-    return dto;
-  }
+      // dto = sensor.fitEnvironmentInfoDTO(dto);
+    // }
+    // return dto;
+  // }
 
 }
 

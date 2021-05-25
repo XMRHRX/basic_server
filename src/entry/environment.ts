@@ -4,32 +4,32 @@ import { EnvironmentInfoDTO } from '@/entry';
 @Entity({ name: 'environment' })
 export class Environment  {
   @PrimaryGeneratedColumn('increment', { type: 'int', unsigned: true })
-  protected _id?: number;
+  _id?: number;
   @Column({
     type: 'double',
     unsigned: true,
     nullable: true
   })
-  protected humidity?: number | null;
+  humidity?: number | null;
   @Column({
     type: 'double',
     unsigned: true,
     nullable: true,
     default: null,
   })
-  protected ultra_ray?: number | null;
+  ultra_ray?: number | null;
   @Column({
     type: 'double',
     unsigned: true,
     nullable: true,
     default: null,
   })
-  protected temperature?: number | null;
+  temperature?: number | null;
   @Column({
     type: 'datetime',
     // default: null,
   })
-  protected date: string;
+  date: string;
 
   constructor(param: Environment = {} as Environment){
 // humidity: number, ultra_ray: number, _id?: string
@@ -47,7 +47,7 @@ export class Environment  {
     this.date = new Date().toString()
   }
 
-  public getEnvironmentInfoDTO(): EnvironmentInfoDTO {
+  public toEnvironmentInfoDTO(): EnvironmentInfoDTO {
     const param: EnvironmentInfoDTO = {
       humidity: this.humidity,
       temperature: this.temperature,

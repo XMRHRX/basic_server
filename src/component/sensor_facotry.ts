@@ -3,18 +3,7 @@ import { HumiditySensor, UltraRaySensor, TemperatureSensor, Sensor } from '@/com
 export class SensorFactory {
 
   public static instance: SensorFactory;
-  constructor(){
-
-  }
-
-  private createId(length: number): string {
-    var result           = [];
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghipqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++ ) {
-      result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
-    }
-    return result.join('');
+    constructor(){
   }
 
   public static init() {
@@ -29,13 +18,12 @@ export class SensorFactory {
 
   public createSensor(name: string, type: string): Sensor{
     let sensor;
-    const id = this.createId(32);
     if(type === 'humidity'){
-      sensor = new HumiditySensor(id, name);
+      sensor = new HumiditySensor(name);
     }else if(type === 'ultra_ray'){
-      sensor = new UltraRaySensor(id, name);
+      sensor = new UltraRaySensor(name);
     }else if(type === 'temperature'){
-      sensor = new TemperatureSensor(id, name);
+      sensor = new TemperatureSensor(name);
     }else{
       throw new Error('unknow sensor type');
     }

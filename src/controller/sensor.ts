@@ -1,8 +1,8 @@
 import { Request as exRequest,  } from 'express';
-import { Controller, Tags, Route, Get, Post, Body, Request } from 'tsoa';
+import { Controller, Tags, Route, Get, Path, Post, Body, Request } from 'tsoa';
 import { SensorHandler } from '@/component'
-import { EnvironmentService } from '@/service';
-import { StoreEnvironmentDTO, SensorInfoDTO, SensorListDTO , RegisterResponseDTO, RegisterSensorDTO } from '@/entry';
+import { EnvironmentService, SensorGroupService } from '@/service';
+import { StoreEnvironmentDTO, SensorStoreDTO, SensorInfoDTO, RegisterResponseDTO, RegisterSensorDTO } from '@/entry';
 
 @Tags('Component')
 @Route('component')
@@ -16,29 +16,24 @@ export class ComponentController extends Controller {
     console.debug('sensors/regsiter');
     console.log(form);
     return {
-      id: await SensorHandler.getInstance().registerSensor(form['type'], form['name']),
+      id: await SensorGroupService.getInstance().store(form['name'], form['sensoType'])
     }
   }
 
-  @Get('sensors/list')
-  public async listSensor(
-    @Request() req: exRequest
-  ): Promise<SensorListDTO> {
-    console.debug('sensors/list');
-    return await SensorHandler.getInstance().listSensor();
-  }
-
-  @Post('sensors')
+  @Post('sensors/{name}')
   public async storeInfo(
     @Request() req: exRequest,
-    @Body() form: SensorInfoDTO,
+    @Path() name: string,
+    @Body() form: SensorStoreDTO,
   ): Promise<void> {
-    // check id exist
+    const id = form['id'];
+    const dataDTO = form['data'];
+    console.log(id)
+    console.log(form)
     try{
-      const sensors = await SensorHandler.getInstance().getSensorById(form['id']);
-      let param = await SensorHandler.getInstance().createDefaultEnvironmentInfoDTO();
-      param = sensors.fitEnvironmentInfoDTO(param);
-      await EnvironmentService.getInstance().store(param);
+      // check id exist
+      await SensorGroupService.getInstance().getById(id);
+      await EnvironmentService.getInstance().store(dataDTO['humidity'], dataDTO['ultra_ray'], dataDTO['temperature']);
     }catch(e) {
       console.log(e);
       this.setStatus(401);
