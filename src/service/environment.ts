@@ -1,12 +1,12 @@
-import { getRepository, Repository } from 'typeorm';
-import { Environment, StoreEnvironmentDTO, EnvironmentInfoDTO } from '@/entry';
+import { getRepository, Repository, getConnection } from 'typeorm';
+import { Environment, EnvironmentInfoDTO } from '@/entry';
 
 export class EnvironmentService {
   private static instance: EnvironmentService;
   private environmentRepo: Repository<Environment>;
 
   constructor() {
-    this.environmentRepo = getRepository(Environment)
+    this.environmentRepo = getRepository(Environment);
   }
 
   public static init() {
@@ -22,21 +22,22 @@ export class EnvironmentService {
 
   public async getById(_id: number): Promise<EnvironmentInfoDTO> {
     const environment: Environment | undefined = await this.environmentRepo.findOne({
-      where: {
       _id: _id
-      }});
+      });
     if(environment === undefined){
       throw new Error();
     }
     return environment.getEnvironmentInfoDTO();
   }
 
-  public async store(param: StoreEnvironmentDTO) {
-    // type error so check the tutorial of insert and typeorm
-    const env = this.environmentRepo.create({});
-    await this.environmentRepo.insert(
-      env
-      // ...param,
-    );
+  public  filterObjectUndefined(object: any): any {
+    Object.keys(object).forEach((key: string) => object[key] === undefined && delete object[key]);
+    return object;
+  }
+
+  public async store(humidity: number | null, ultra_ray: number | null, temperature: number | null) {
+    this.environmentRepo.insert({
+      humidity, temperature, ultra_ray
+    });
   }
 }

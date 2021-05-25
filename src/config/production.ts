@@ -12,7 +12,7 @@ export default {
   database: 'webpages',
   dropSchema: false,
   entities: [
-    Environment
+    Environment,
     // Page,
   ],
   migrations: [ Init1615878322530 ],
