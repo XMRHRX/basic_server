@@ -30,11 +30,6 @@ export class EnvironmentService {
     return environment.getEnvironmentInfoDTO();
   }
 
-  public  filterObjectUndefined(object: any): any {
-    Object.keys(object).forEach((key: string) => object[key] === undefined && delete object[key]);
-    return object;
-  }
-
   public async store(humidity: number | null, ultra_ray: number | null, temperature: number | null) {
     this.environmentRepo.insert({
       humidity, temperature, ultra_ray
