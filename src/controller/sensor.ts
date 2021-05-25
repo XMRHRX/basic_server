@@ -8,7 +8,6 @@ import { SensorStoreDTO, SensorInfoDTO, RegisterResponseDTO, RegisterSensorDTO }
 @Route('component')
 export class ComponentController extends Controller {
 
-<<<<<<< HEAD
   @Post('sensors/register')
   public async registerSensor(
     @Request() req: exRequest,
