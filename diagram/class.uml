@@ -1,5 +1,16 @@
 @startuml
 /' controller '/
+
+class Controller {
+  -statusCode: number
+  -headers: Object
+  +setStatus(statusCode: number):  void
+  +getStatus(): number
+  +setHeader(name: string,  value: string | string[]):  void
+  +getHeader(name:  string): string | string[]
+  +getHeaders(): Object
+}
+
 class EnvironmentController extends Controller {
   +getEnvironment(_id: number): EnvironmentInfoDTO
   +detect(): void
@@ -12,11 +23,22 @@ class AIController extends Controller {
 
 }
 
+class EnvironmentService {
+  -instance: EnvironmentService;
+  -environmentRepo: Repository<Environment>;
+  +init(): void
+  +getInstance(): EnvironmentService
+  +getById(_id: number): EnvironmentInfoDTO
+  +filterObjectUndefined(object: any): any 
+}
+
+
 class ComponentController extends Controller {
   +registerSensor(req: Request, form: RegisterSensorDTO): RegisterResponseDTO 
   +listSensor(req: Request): SensorListDTO
   +storeInfo(req: Request, form: SensorInfoDTO): void
 }
+
 
 /' service '/
 interface AISettingDTO {
@@ -30,6 +52,7 @@ interface AISettingDTO {
     +timeFrom?: string | undefined
     +timeTo?: string | undefined
 }
+
 interface EnvironmentInfoDTO {
     +humidity?: number | null | undefined
     +ultra_ray?: number | null | undefined
@@ -65,11 +88,6 @@ interface AISettingDTO {
 }
 interface PredictResultDTO {
 
-}
-interface StoreEnvironmentDTO {
-    +humidity?: number | null | undefined
-    +ultra_ray?: number | null | undefined
-    +temperature?: number | null | undefined
 }
 interface SensorListDTO {
     +sensors: SensorInfoDTO[]
@@ -137,6 +155,7 @@ class SensorFactory {
     +{static} init(): void
     +{static} getInstance(): SensorFactory
 }
+
 Sensor *-- EnvironmentInfoDTO
 Sensor *-- SensorInfoDTO
 HumiditySensor *-- EnvironmentInfoDTO
@@ -154,4 +173,8 @@ ComponentController *-- RegisterResponseDTO
 ComponentController *-- SensorListDTO
 ComponentController *-- SensorInfoDTO
 AIController *-- PredictResultDTO
+AIController *-- AI
+ComponentController *-- EnvironmentService
+EnvironmentController *-- EnvironmentService
+
 @enduml

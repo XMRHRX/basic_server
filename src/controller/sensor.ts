@@ -2,12 +2,13 @@ import { Request as exRequest,  } from 'express';
 import { Controller, Tags, Route, Get, Path, Post, Body, Request } from 'tsoa';
 import { SensorHandler } from '@/component'
 import { EnvironmentService, SensorGroupService } from '@/service';
-import { StoreEnvironmentDTO, SensorStoreDTO, SensorInfoDTO, RegisterResponseDTO, RegisterSensorDTO } from '@/entry';
+import { SensorStoreDTO, SensorInfoDTO, RegisterResponseDTO, RegisterSensorDTO } from '@/entry';
 
 @Tags('Component')
 @Route('component')
 export class ComponentController extends Controller {
 
+<<<<<<< HEAD
   @Post('sensors/register')
   public async registerSensor(
     @Request() req: exRequest,

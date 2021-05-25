@@ -1,12 +1,12 @@
-import { getRepository, Repository } from 'typeorm';
-import { Environment, StoreEnvironmentDTO, EnvironmentInfoDTO } from '@/entry';
+import { getRepository, Repository, getConnection } from 'typeorm';
+import { Environment, EnvironmentInfoDTO } from '@/entry';
 
 export class EnvironmentService {
   private static instance: EnvironmentService;
   private environmentRepo: Repository<Environment>;
 
   constructor() {
-    this.environmentRepo = getRepository(Environment)
+    this.environmentRepo = getRepository(Environment);
   }
 
   public static init() {

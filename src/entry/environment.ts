@@ -1,33 +1,31 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { EnvironmentInfoDTO } from '@/entry';
 
-@Entity({ name: 'environment' })
+@Entity({ name: 'Environment' })
 export class Environment  {
   @PrimaryGeneratedColumn('increment', { type: 'int', unsigned: true })
   _id?: number;
   @Column({
     type: 'double',
-    unsigned: true,
-    nullable: true
+    nullable: true,
+    default: ()=>'NULL',
   })
-  humidity?: number | null;
+  humidity: number | null;
   @Column({
     type: 'double',
-    unsigned: true,
     nullable: true,
-    default: null,
+    default: ()=>'NULL',
   })
-  ultra_ray?: number | null;
+  ultra_ray: number | null;
   @Column({
     type: 'double',
-    unsigned: true,
     nullable: true,
-    default: null,
+    default: ()=>'NULL',
   })
-  temperature?: number | null;
+  temperature: number | null;
   @Column({
     type: 'datetime',
-    // default: null,
+    default: ()=> 'now()',
   })
   date: string;
 
@@ -36,15 +34,15 @@ export class Environment  {
     const {
       _id,
       humidity,
-      ultra_ray,
-      temperature,
-      date,
+      ultra_ray = null,
+      temperature = null,
+      date
     } = param;
     this._id = _id;
     this.humidity = humidity;
     this.ultra_ray = ultra_ray;
     this.temperature = temperature;
-    this.date = new Date().toString()
+    this.date = date;
   }
 
   public toEnvironmentInfoDTO(): EnvironmentInfoDTO {
