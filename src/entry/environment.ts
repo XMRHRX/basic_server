@@ -45,12 +45,24 @@ export class Environment  {
     this.date = date;
   }
 
-  public toEnvironmentInfoDTO(): EnvironmentInfoDTO {
-    const param: EnvironmentInfoDTO = {
-      humidity: this.humidity,
-      temperature: this.temperature,
-      ultra_ray: this.ultra_ray,
-    };
-    return param;
+  public getHumidity(): number | null {
+    return this.humidity;
   }
+
+  public getUltraRay(): number | null {
+    return this.ultra_ray;
+  }
+
+  public getTemperature(): number | null {
+    return this.temperature;
+  }
+
+  public getDate(): string {
+    return this.date;
+  }
+
+  public getId(): number | undefined {
+    return this._id;
+  }
+
 }

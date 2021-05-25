@@ -13,7 +13,6 @@ export class ComponentController extends Controller {
     @Request() req: exRequest,
     @Body() form: RegisterSensorDTO,
   ): Promise<RegisterResponseDTO>{
-    console.debug('sensors/regsiter');
     console.log(form);
     return {
       id: await SensorGroupService.getInstance().store(form['name'], form['sensorType'])

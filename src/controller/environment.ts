@@ -13,10 +13,13 @@ export class EnvironmentController extends Controller {
   public async getEnvironment(
   @Path() id: number
   ): Promise<EnvironmentInfoDTO> {
-// _id: number
-    console.debug("info");
     try{
-      return (await EnvironmentService.getInstance().getById(id)).toEnvironmentInfoDTO();
+      const enviroment: Environment = await EnvironmentService.getInstance().getById(id)
+      return {
+        humidity: enviroment.getHumidity(),
+        temperature: enviroment.getTemperature(),
+        ultra_ray: enviroment.getUltraRay(),
+      };
     }catch(e){
       console.log(e);
       this.setStatus(401);
