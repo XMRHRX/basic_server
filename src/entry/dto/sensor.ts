@@ -5,7 +5,7 @@ export interface RegisterResponseDTO {
 
 export interface RegisterSensorDTO {
   name: string,
-  sensoType: string[],
+  sensorType: string[],
 }
 
 export interface SensorStoreDTO {

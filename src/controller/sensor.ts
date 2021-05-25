@@ -16,7 +16,7 @@ export class ComponentController extends Controller {
     console.debug('sensors/regsiter');
     console.log(form);
     return {
-      id: await SensorGroupService.getInstance().store(form['name'], form['sensoType'])
+      id: await SensorGroupService.getInstance().store(form['name'], form['sensorType'])
     }
   }
 
@@ -28,8 +28,6 @@ export class ComponentController extends Controller {
   ): Promise<void> {
     const id = form['id'];
     const dataDTO = form['data'];
-    console.log(id)
-    console.log(form)
     try{
       // check id exist
       await SensorGroupService.getInstance().getById(id);

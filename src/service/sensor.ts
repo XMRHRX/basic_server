@@ -6,10 +6,10 @@ export class SensorGroupService {
   private sensorGroupRepo: Repository<SensorGroup>;
 
   private createId(length: number): string {
-    var result           = [];
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghipqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++ ) {
+    const result           = [];
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghipqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
       result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
     }
     return result.join('');
@@ -41,10 +41,11 @@ export class SensorGroupService {
   }
 
   public async store(name: string, sensorType: string[]) {
-    // type error so check the tutorial of insert and typeorm
     const _id = this.createId(32);
+    const stringSensorType = JSON.stringify(sensorType);
+    console.log(stringSensorType);
     await this.sensorGroupRepo.insert({
-       _id, name, sensorType
+       _id, name, sensorType: stringSensorType
     });
     return _id;
   }

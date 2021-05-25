@@ -14,7 +14,7 @@ export class SensorGroup  {
   @Column({
     type: 'text',
   })
-  sensorType: Array<string>
+  sensorType: string
 
   constructor(param: SensorGroup = {} as SensorGroup){
 // humidity: number, ultra_ray: number, _id?: string
@@ -35,6 +35,7 @@ export class SensorGroup  {
     return this.name;
   }
   public getSensorType(): string[] {
-    return this.sensorType;
+    const arraySensorType = JSON.parse(this.sensorType);
+    return arraySensorType;
   }
 }
