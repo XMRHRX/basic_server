@@ -1,7 +1,7 @@
 import { ConnectionOptions } from 'typeorm';
 import { Init1615878322530 } from '@/migrations';
 // import { Page } from '@/entry';
-import { Environment, SensorGroup } from '@/entry';
+import { Environment, SensorGroup, Crop } from '@/entry';
 
 export default {
   type: 'mysql',
@@ -12,7 +12,7 @@ export default {
   database: 'webpages',
   dropSchema: false,
   entities: [
-    Environment, SensorGroup
+    Environment, SensorGroup, Crop
     // Page,
   ],
   migrations: [ Init1615878322530 ],

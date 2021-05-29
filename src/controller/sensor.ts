@@ -19,17 +19,21 @@ export class ComponentController extends Controller {
     }
   }
 
-  @Post('sensors/{name}')
+  // @Post('sensors/{name}')
+  @Post('sensors')
   public async storeInfo(
     @Request() req: exRequest,
-    @Path() name: string,
-    @Body() form: SensorStoreDTO,
+    // @Path() name: string,
+    // @Body() form: SensorStoreDTO,
+    @Body() form: SensorInfoDTO,
   ): Promise<void> {
-    const id = form['id'];
-    const dataDTO = form['data'];
+    // const id = form['id'];
+    // const dataDTO = form['data'];
+    const dataDTO = form;
+
     try{
       // check id exist
-      await SensorGroupService.getInstance().getById(id);
+      // await SensorGroupService.getInstance().getById(id);
       await EnvironmentService.getInstance().store(dataDTO['humidity'], dataDTO['ultra_ray'], dataDTO['temperature']);
     }catch(e) {
       console.log(e);

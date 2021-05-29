@@ -8,7 +8,7 @@ import { RegisterRoutes } from "@/routes";
 import { SensorHandler } from '@/component';
 // import { APIErrors } from '@/error';
 // import * as swaggerDocument from './swagger.json' //https: //sean-bradley.medium.com/add-swagger-ui-to-existing-nodejs-typescript-api-882ca7aded90
-import { EnvironmentService, SensorGroupService } from '@/service';
+import { EnvironmentService, SensorGroupService, CropService } from '@/service';
 
 
 
@@ -42,6 +42,7 @@ export default function AppInit(typeormConfig: ConnectionOptions): Promise<Expre
     await createConnection(typeormConfig);
     await EnvironmentService.init();
     await SensorGroupService.init();
+    await CropService.init();
     await SensorHandler.init();
     RegisterRoutes(app);
 

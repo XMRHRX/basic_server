@@ -27,6 +27,29 @@ export class EnvironmentController extends Controller {
     }
   }
 
+  @Get('detect')
+  public async getMostRecnetlyEnvironment(
+  ): Promise<EnvironmentInfoDTO> {
+    try{
+      const enviroment = await EnvironmentService.getInstance().getMostRecnetly()
+      if(enviroment === undefined) {
+        this.setStatus(401);
+        throw new Error('unknow error')
+      }
+      return {
+        humidity: enviroment.getHumidity(),
+        ultra_ray: enviroment.getUltraRay(),
+        temperature: enviroment.getTemperature(),
+      }
+
+    }catch(e){
+      console.log(e);
+      this.setStatus(401);
+      throw new Error('unknow error')
+
+    }
+  }
+
   // @Post('detect')
   // public async detect(
   // ): Promise <void> {

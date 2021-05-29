@@ -1,4 +1,4 @@
-
+import { Crop } from '@/entry';
 
 // export interface IAISetting{
     // Authorization: string,
@@ -15,7 +15,7 @@
 // }
 //
 export interface PredictResultDTO{
-
+  cropList: Crop[]
 }
 
 export interface AISettingDTO{

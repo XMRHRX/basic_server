@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { EnvironmentInfoDTO } from '@/entry';
 import { Sensor } from '@/component'
 
 @Entity({ name: 'sensor_group' })

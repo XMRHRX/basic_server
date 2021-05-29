@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { EnvironmentInfoDTO } from '@/entry';
 
 @Entity({ name: 'Environment' })
 export class Environment  {

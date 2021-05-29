@@ -19,6 +19,23 @@ export class EnvironmentService {
   public static getInstance(): EnvironmentService {
     return this.instance;
   }
+  public async getMostRecnetly(): Promise<Environment> {
+    try{
+      const environment = await this.environmentRepo
+        .createQueryBuilder('env') //alias
+        .orderBy('env.date', 'DESC')
+        .select() 
+        .getOne();
+
+    if(environment === undefined){
+      throw new Error();
+    }
+    return environment;
+    }catch(e){
+      console.log(e)
+      throw new Error('')
+    }
+  }
 
   public async getById(_id: number): Promise<Environment> {
     const environment: Environment | undefined = await this.environmentRepo.findOne({

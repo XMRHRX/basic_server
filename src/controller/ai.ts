@@ -1,5 +1,6 @@
 import { Controller, Tags, Route, Get, Post } from 'tsoa';
-import { AISettingDTO, PredictResultDTO } from '@/entry';
+import { AISettingDTO, PredictResultDTO, Crop } from '@/entry';
+import { EnvironmentService, CropService } from '@/service';
 import { AI } from '@/AI';
 
 @Tags('AI')
@@ -8,15 +9,18 @@ export class AIController extends Controller {
 
   @Get()
   public async predict(): Promise<PredictResultDTO> {
+    const environment = await EnvironmentService.getInstance().getMostRecnetly();
+    console.log(environment)
+    // const temp = await CropService.getInstance().getByRange(environment.getHumidity(), environment.getUltraRay(), environment.getTemperature());
+    // console.log(temp)
     const ai = new AI();
     const param: AISettingDTO = {
-      // Authorization: '_', // would be replace in the setting function, so could be anything
-      // locationName: ['%E9%9B%B2%E6%9E%97%E7%B8%A3'], // 雲林縣, char should be escaped
-      limit: 10,
+      limit: 1,
     }
     ai.set(param);
-    ai.predict();
-    return {};
+    return {
+      cropList: await ai.predict()
+    }
     // 1. sensor informatin/DB information
     // 2. AI information
     // opt 3. classify
