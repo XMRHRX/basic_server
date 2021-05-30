@@ -34,7 +34,7 @@ export class ComponentController extends Controller {
     try{
       // check id exist
       // await SensorGroupService.getInstance().getById(id);
-      await EnvironmentService.getInstance().store(dataDTO['humidity'], dataDTO['ultra_ray'], dataDTO['temperature']);
+      await EnvironmentService.getInstance().store(dataDTO['humidity'], dataDTO['ultra_ray'], dataDTO['temperature'], dataDTO['protectionStatus']);
     }catch(e) {
       console.log(e);
       this.setStatus(401);

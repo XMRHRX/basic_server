@@ -64,7 +64,6 @@ export class Init1615878322530 implements MigrationInterface {
       // --------------------------
 
       await queryRunner.query('INSERT INTO `Environment` (`humidity`, `ultra_ray`, `temperature`, `date`) VALUES (1, 2, 3, "2021-05-27 07:07:14")');
-      await queryRunner.query('INSERT INTO `Environment` (`humidity`, `ultra_ray`, `temperature`, `date`) VALUES (40, 220, 29,  "2021-06-11 07:07:14")');
       await queryRunner.query('INSERT INTO `Environment` (`humidity`, `ultra_ray`, `temperature`, `date`) VALUES (42, 221, 19,  "2021-02-13 07:07:14")');
     }
 

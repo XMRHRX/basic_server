@@ -47,9 +47,9 @@ export class EnvironmentService {
     return environment;
   }
 
-  public async store(humidity: number | null, ultra_ray: number | null, temperature: number | null) {
+  public async store(humidity: number | null, ultra_ray: number | null, temperature: number | null, protectionStatus?: string) {
     await this.environmentRepo.insert({
-      humidity, ultra_ray, temperature
+      humidity, ultra_ray, temperature, protectionStatus
     });
   }
 }

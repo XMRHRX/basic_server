@@ -23,6 +23,11 @@ export class Environment  {
   })
   temperature: number | null;
   @Column({
+    type: 'text',
+    nullable: true,
+  })
+  protectionStatus?: string;
+  @Column({
     type: 'datetime',
     default: ()=> 'now()',
   })
@@ -35,12 +40,14 @@ export class Environment  {
       humidity,
       ultra_ray = null,
       temperature = null,
+      protectionStatus,
       date
     } = param;
     this._id = _id;
     this.humidity = humidity;
     this.ultra_ray = ultra_ray;
     this.temperature = temperature;
+    this.protectionStatus = protectionStatus
     this.date = date;
   }
 
@@ -58,6 +65,10 @@ export class Environment  {
 
   public getDate(): string {
     return this.date;
+  }
+
+  public getProtectionStatus(): string | undefined {
+    return this.protectionStatus;
   }
 
   public getId(): number | undefined {

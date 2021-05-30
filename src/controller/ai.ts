@@ -11,8 +11,6 @@ export class AIController extends Controller {
   public async predict(): Promise<PredictResultDTO> {
     const environment = await EnvironmentService.getInstance().getMostRecnetly();
     console.log(environment)
-    // const temp = await CropService.getInstance().getByRange(environment.getHumidity(), environment.getUltraRay(), environment.getTemperature());
-    // console.log(temp)
     const ai = new AI();
     const param: AISettingDTO = {
       limit: 1,
@@ -21,9 +19,5 @@ export class AIController extends Controller {
     return {
       cropList: await ai.predict()
     }
-    // 1. sensor informatin/DB information
-    // 2. AI information
-    // opt 3. classify
-    // 4. find API form plants
   }
 }

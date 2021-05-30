@@ -27,7 +27,7 @@ export class EnvironmentController extends Controller {
     }
   }
 
-  @Get('detect')
+  @Get()
   public async getMostRecnetlyEnvironment(
   ): Promise<EnvironmentInfoDTO> {
     try{
@@ -40,13 +40,13 @@ export class EnvironmentController extends Controller {
         humidity: enviroment.getHumidity(),
         ultra_ray: enviroment.getUltraRay(),
         temperature: enviroment.getTemperature(),
+        protectionStatus: enviroment.getProtectionStatus(),
       }
 
     }catch(e){
       console.log(e);
       this.setStatus(401);
       throw new Error('unknow error')
-
     }
   }
 
