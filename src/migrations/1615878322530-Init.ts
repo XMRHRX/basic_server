@@ -55,10 +55,10 @@ export class Init1615878322530 implements MigrationInterface {
       await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("茄子","夏",85,30,8, 4, 40,22)');
       await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("苦瓜","夏",75,20,10, 5, 35,20)');
       await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("芹菜","冬", 65,25,10, 6, 45,15)');
-      await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("洋蔥","夏",80,25,9, 4, 36,20)');
+      await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("洋蔥","夏",86,25,9, 4, 36,20)');
       await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("辣椒","秋",70,30,11, 5, 40,25)');
       await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("白菜","冬",75,48,6, 0, 35,5)');
-      await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("甜菜","冬",85,25,8, 2, 29,10)');
+      await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("甜菜","冬",87,25,9, 2, 29,10)');
       await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("馬鈴薯","秋",50,15,11, 5, 32,18)');
       await queryRunner.query('INSERT INTO `Crop` ( `name`, `season`, `max_humidity`, `min_humidity`, `max_ultra_ray`, `min_ultra_ray`, `max_temperature`, `min_temperature`) VALUES ("紅蘿蔔","夏",65,15,11, 4, 31,15)');
       // --------------------------

@@ -19,12 +19,9 @@ export class ComponentController extends Controller {
     }
   }
 
-  // @Post('sensors/{name}')
   @Post('sensors')
   public async storeInfo(
     @Request() req: exRequest,
-    // @Path() name: string,
-    // @Body() form: SensorStoreDTO,
     @Body() form: SensorInfoDTO,
   ): Promise<void> {
     // const id = form['id'];
